@@ -11,8 +11,10 @@ class Controller {
 		const self = this;
 
 		this.view.$newTodo.addEventListener('keypress', function(e) {
-			if (e.keyCode === self._ENTER_KEY) {
-				const todo = self.createTodo(this.value); 
+			const inputValue = this.value.trim();
+
+			if (e.keyCode === self._ENTER_KEY && inputValue !== '') {
+				const todo = self.createTodo(inputValue); 
 				self.view.$todoList.appendChild(todo);
 				this.value = '';
 				self.updateTodosFooter();
