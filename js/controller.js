@@ -24,13 +24,42 @@ class Controller {
 			const tagName = target.tagName;
 
 			if (tagName === 'INPUT') {
-				const label = target.parentNode.querySelector('label');
-				label.classList.toggle('completed');
+				const todo = target.parentNode;
+				todo.classList.toggle('completed');
 			} else if (tagName === 'BUTTON') {
 				const todo = target.parentNode;
 				self.view.$todoList.removeChild(todo);
 			}
 			self.updateViewTodosCount();
+		});
+
+		this.view.todoFooter.$allFilter.addEventListener('click', function() {
+			const todos = self.view.$todoList.children;
+			for(let i = 0; i < todos.length; i++) {
+				todos[i].style.display = 'list-item';
+			}
+		});
+
+		this.view.todoFooter.$activeFilter.addEventListener('click', function() {
+			const todos = self.view.$todoList.children;
+			for(let i = 0; i < todos.length; i++) {
+				if (todos[i].className.includes('completed')) {
+					todos[i].style.display = 'none';
+				} else {
+					todos[i].style.display = 'list-item';
+				}
+			}
+		});
+
+		this.view.todoFooter.$completedFilter.addEventListener('click', function() {
+			const todos = self.view.$todoList.children;
+			for(let i = 0; i < todos.length; i++) {
+				if (!todos[i].className.includes('completed')) {
+					todos[i].style.display = 'none';
+				} else {
+					todos[i].style.display = 'list-item';
+				}
+			}
 		});
 	}
 
@@ -54,7 +83,7 @@ class Controller {
 
 	updateViewTodosCount() {
 		const activeTodos = 
-		this.view.$todoList.querySelectorAll('li label:not(.completed)');
+		this.view.$todoList.querySelectorAll('li:not(.completed)');
 
 		this.view.todoFooter.$todoCounter.textContent = activeTodos.length;
 	}
