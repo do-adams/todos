@@ -7,12 +7,6 @@ class Controller {
 		this.view = view;
 	}
 
-	createTodoItem(text) {
-		const item = document.createElement('li');
-		item.textContent = text;
-		return item;
-	}
-
 	setViewEventHandlers() {
 		const self = this;
 
@@ -21,7 +15,31 @@ class Controller {
 				const todoItem = self.createTodoItem(this.value); 
 				self.view.$todoList.appendChild(todoItem);
 				this.value = '';
+				self.updateViewItemCount();
 			}
 		});
+	}
+
+	createTodoItem(text) {
+		const todo = document.createElement('li');
+
+		const checkbox = document.createElement('input');
+		checkbox.type = 'checkbox';
+		todo.appendChild(checkbox);
+
+		const label = document.createElement('label');
+		label.textContent = text + ' ';
+		todo.appendChild(label);
+
+		const button = document.createElement('button');
+		button.textContent = '×';
+		todo.appendChild(button);
+
+		return todo;
+	}
+
+	updateViewItemCount() {
+		this.view.todoFooter.$itemCounter.textContent = 
+		this.view.$todoList.childElementCount;
 	}
 }
