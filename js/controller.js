@@ -56,6 +56,6 @@ class Controller {
 		const activeTodos = 
 		this.view.$todoList.querySelectorAll('li label:not(.completed)');
 
-		this.view.todoFooter.$itemCounter.textContent = activeTodos.length;
+		this.view.todoFooter.$todoCounter.textContent = activeTodos.length;
 	}
 }
