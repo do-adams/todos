@@ -38,7 +38,7 @@ class Controller {
 		this.view.todoFooter.$allFilter.addEventListener('click', function() {
 			const todos = self.view.$todoList.children;
 			for(let i = 0; i < todos.length; i++) {
-				todos[i].style.display = 'list-item';
+				todos[i].style.display = 'block';
 			}
 		});
 
@@ -48,7 +48,7 @@ class Controller {
 				if (todos[i].className.includes('completed')) {
 					todos[i].style.display = 'none';
 				} else {
-					todos[i].style.display = 'list-item';
+					todos[i].style.display = 'block';
 				}
 			}
 		});
@@ -59,7 +59,7 @@ class Controller {
 				if (!todos[i].className.includes('completed')) {
 					todos[i].style.display = 'none';
 				} else {
-					todos[i].style.display = 'list-item';
+					todos[i].style.display = 'block';
 				}
 			}
 		});
