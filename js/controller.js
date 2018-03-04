@@ -41,7 +41,7 @@ class Controller {
 
 			const todos = self.view.$todoList.children;
 			for(let i = 0; i < todos.length; i++) {
-				todos[i].style.display = 'block';
+				todos[i].style.display = 'flex';
 			}
 		});
 
@@ -54,7 +54,7 @@ class Controller {
 				if (todos[i].className.includes('completed')) {
 					todos[i].style.display = 'none';
 				} else {
-					todos[i].style.display = 'block';
+					todos[i].style.display = 'flex';
 				}
 			}
 		});
@@ -68,7 +68,7 @@ class Controller {
 				if (!todos[i].className.includes('completed')) {
 					todos[i].style.display = 'none';
 				} else {
-					todos[i].style.display = 'block';
+					todos[i].style.display = 'flex';
 				}
 			}
 		});
@@ -96,7 +96,7 @@ class Controller {
 		$todo.appendChild($checkbox);
 
 		const $label = document.createElement('label');
-		$label.textContent = text + ' ';
+		$label.textContent = text;
 		$todo.appendChild($label);
 
 		const $button = document.createElement('button');

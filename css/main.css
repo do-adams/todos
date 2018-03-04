@@ -19,10 +19,18 @@ main {
 
 ul {
 	margin: 0;
+	padding-left: 0;
 }
 
 li {
-	display: block;
+	display: flex;
+	padding: 0.25em;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+li label {
+	margin-right: auto;
+	padding-left: 0.25em;
 }
 
 input:focus {
@@ -59,15 +67,26 @@ input:focus {
 	box-sizing: border-box;
 }
 
-.completed {
+.completed label {
 	text-decoration: line-through;
 }
 
 .todo-footer {
 	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: baseline;
 	justify-content: space-between;
+	padding: 0 2em;
 	font-size: 0.7em;
-	padding: 1em 2em 0.5em;
+}
+
+.todo-footer span {
+	margin: 1em 0 0.5em;
+}
+
+.todo-footer button {
+	margin: 0 0 0.5em;
 }
 
 /** Small devices (landscape phones, 576px and up) **/
