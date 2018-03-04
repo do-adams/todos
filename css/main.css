@@ -17,9 +17,16 @@ main {
 	text-align: center;
 }
 
-.new-todo {
-	width: 100%;
-	padding: 0.5em;
+ul {
+	margin: 0;
+}
+
+li {
+	display: block;
+}
+
+input:focus {
+	outline: none;
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -38,20 +45,23 @@ main {
   opacity: 0.3;
 }
 
+.new-todo {
+	width: 100%;
+	padding: 0.5em;
+	box-sizing: border-box;
+}
+
+.todo-container {
+	margin: 0;
+	background-color: #FFF;
+}
+
 .todo-text-sizing {
 	font-size: 1.3em;
 }
 
 .completed {
 	text-decoration: line-through;
-}
-
-input:focus {
-	outline: none;
-}
-
-li {
-	display: block;
 }
 
 /** Small devices (landscape phones, 576px and up) **/
