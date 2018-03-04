@@ -15,7 +15,7 @@ class Controller {
 				const todo = self.createTodo(this.value); 
 				self.view.$todoList.appendChild(todo);
 				this.value = '';
-				self.updateViewTodosCount();
+				self.updateTodosFooter();
 			}
 		});
 
@@ -30,7 +30,7 @@ class Controller {
 				const todo = target.parentNode;
 				self.view.$todoList.removeChild(todo);
 			}
-			self.updateViewTodosCount();
+			self.updateTodosFooter();
 		});
 
 		this.view.todoFooter.$allFilter.addEventListener('click', function() {
@@ -61,6 +61,19 @@ class Controller {
 				}
 			}
 		});
+
+		this.view.todoFooter.$clearCompletedBtn.addEventListener('click', function() {
+			const todos = self.view.$todoList.children;
+			let index = [];
+			for(let i = 0; i < todos.length; i++) {
+				if (todos[i].className.includes('completed')) {
+					index.push(todos[i]);
+				}
+			}
+			for(let todo of index) {
+				self.view.$todoList.removeChild(todo);
+			}
+		});
 	}
 
 	createTodo(text) {
@@ -81,10 +94,16 @@ class Controller {
 		return todo;
 	}
 
-	updateViewTodosCount() {
+	updateTodosFooter() {
 		const activeTodos = 
 		this.view.$todoList.querySelectorAll('li:not(.completed)');
-
 		this.view.todoFooter.$todoCounter.textContent = activeTodos.length;
+
+		const completedTodos = this.view.$todoList.querySelectorAll('.completed');
+		if (completedTodos.length > 0) {
+			this.view.todoFooter.$clearCompletedBtn.style.display = 'inline-block';
+		} else {
+			this.view.todoFooter.$clearCompletedBtn.style.display = 'none';
+		}
 	}
 }
