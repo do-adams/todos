@@ -36,6 +36,9 @@ class Controller {
 		});
 
 		this.view.todoFooter.$allFilter.addEventListener('click', function() {
+			self.toggleFilterSelectionOff();
+			this.classList.add('selected');
+			
 			const todos = self.view.$todoList.children;
 			for(let i = 0; i < todos.length; i++) {
 				todos[i].style.display = 'block';
@@ -43,6 +46,9 @@ class Controller {
 		});
 
 		this.view.todoFooter.$activeFilter.addEventListener('click', function() {
+			self.toggleFilterSelectionOff();
+			this.classList.add('selected');
+
 			const todos = self.view.$todoList.children;
 			for(let i = 0; i < todos.length; i++) {
 				if (todos[i].className.includes('completed')) {
@@ -54,6 +60,9 @@ class Controller {
 		});
 
 		this.view.todoFooter.$completedFilter.addEventListener('click', function() {
+			self.toggleFilterSelectionOff();
+			this.classList.add('selected');
+
 			const todos = self.view.$todoList.children;
 			for(let i = 0; i < todos.length; i++) {
 				if (!todos[i].className.includes('completed')) {
@@ -107,5 +116,10 @@ class Controller {
 		} else {
 			this.view.todoFooter.$clearCompletedBtn.style.display = 'none';
 		}
+	}
+
+	toggleFilterSelectionOff() {
+		const $selectedFilter = document.querySelector('.todo-footer .selected');
+		$selectedFilter.classList.remove('selected');
 	}
 }
