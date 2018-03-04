@@ -9,12 +9,12 @@ h1 {
 	color: #70566D;
 	font-size: 5em;
 	font-weight: 100;
+	text-align: center;
 }
 
 main {
 	width: 80%;
 	margin: 0 auto;
-	text-align: center;
 }
 
 ul {
@@ -45,23 +45,29 @@ input:focus {
   opacity: 0.3;
 }
 
+.todo-text-sizing {
+	font-size: 1.3em;
+}
+
+.todo-container {
+	background-color: #FFF;
+}
+
 .new-todo {
 	width: 100%;
 	padding: 0.5em;
 	box-sizing: border-box;
 }
 
-.todo-container {
-	margin: 0;
-	background-color: #FFF;
-}
-
-.todo-text-sizing {
-	font-size: 1.3em;
-}
-
 .completed {
 	text-decoration: line-through;
+}
+
+.todo-footer {
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.7em;
+	padding: 1em 2em 0.5em;
 }
 
 /** Small devices (landscape phones, 576px and up) **/
@@ -73,19 +79,11 @@ input:focus {
 
 }
 
-/** Medium devices (tablets, 768px and up) **/
-@media (min-width: 768px) {
-	
-	main {
-		width: 50%;
-	}
-}
-
 /** Large devices (desktops, 992px and up) **/
 @media (min-width: 992px) { 
 
 	main {
-		width: 30%;
+		width: 40%;
 	}
 
 }

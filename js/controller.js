@@ -113,9 +113,9 @@ class Controller {
 
 		const completedTodos = this.view.$todoList.querySelectorAll('.completed');
 		if (completedTodos.length > 0) {
-			this.view.todoFooter.$clearCompletedBtn.style.display = 'inline-block';
+			this.view.todoFooter.$clearCompletedBtn.style.visibility = 'visible';
 		} else {
-			this.view.todoFooter.$clearCompletedBtn.style.display = 'none';
+			this.view.todoFooter.$clearCompletedBtn.style.visibility = 'hidden';
 		}
 	}
 
