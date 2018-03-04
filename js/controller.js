@@ -14,23 +14,23 @@ class Controller {
 			const inputValue = this.value.trim();
 
 			if (e.keyCode === self._ENTER_KEY && inputValue !== '') {
-				const todo = self.createTodo(inputValue); 
-				self.view.$todoList.appendChild(todo);
+				const $todo = self.createTodoElem(inputValue); 
+				self.view.$todoList.appendChild($todo);
 				this.value = '';
 				self.updateTodosFooter();
 			}
 		});
 
 		this.view.$todoList.addEventListener('click', function(e) {
-			const target = e.target;
-			const tagName = target.tagName;
+			const $target = e.target;
+			const tagName = $target.tagName;
 
 			if (tagName === 'INPUT') {
-				const todo = target.parentNode;
-				todo.classList.toggle('completed');
+				const $todo = $target.parentNode;
+				$todo.classList.toggle('completed');
 			} else if (tagName === 'BUTTON') {
-				const todo = target.parentNode;
-				self.view.$todoList.removeChild(todo);
+				const $todo = $target.parentNode;
+				self.view.$todoList.removeChild($todo);
 			}
 			self.updateTodosFooter();
 		});
@@ -38,7 +38,7 @@ class Controller {
 		this.view.todoFooter.$allFilter.addEventListener('click', function() {
 			self.toggleFilterSelectionOff();
 			this.classList.add('selected');
-			
+
 			const todos = self.view.$todoList.children;
 			for(let i = 0; i < todos.length; i++) {
 				todos[i].style.display = 'block';
@@ -87,22 +87,22 @@ class Controller {
 		});
 	}
 
-	createTodo(text) {
-		const todo = document.createElement('li');
+	createTodoElem(text) {
+		const $todo = document.createElement('li');
 
-		const checkbox = document.createElement('input');
-		checkbox.type = 'checkbox';
-		todo.appendChild(checkbox);
+		const $checkbox = document.createElement('input');
+		$checkbox.type = 'checkbox';
+		$todo.appendChild($checkbox);
 
-		const label = document.createElement('label');
-		label.textContent = text + ' ';
-		todo.appendChild(label);
+		const $label = document.createElement('label');
+		$label.textContent = text + ' ';
+		$todo.appendChild($label);
 
-		const button = document.createElement('button');
-		button.textContent = '×';
-		todo.appendChild(button);
+		const $button = document.createElement('button');
+		$button.textContent = '×';
+		$todo.appendChild($button);
 
-		return todo;
+		return $todo;
 	}
 
 	updateTodosFooter() {
