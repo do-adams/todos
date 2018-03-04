@@ -84,6 +84,7 @@ class Controller {
 			for(let todo of index) {
 				self.view.$todoList.removeChild(todo);
 			}
+			self.updateTodosFooter();
 		});
 	}
 
