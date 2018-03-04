@@ -1,7 +1,81 @@
+
+body {	
+	height: 100vh;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background: linear-gradient(#FFFBF6, #ABC8C0);
+}
+
+h1 {
+	color: #70566D;
+	font-size: 5em;
+	font-weight: 100;
+}
+
+main {
+	width: 80%;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.new-todo {
+	width: 100%;
+	padding: 0.5em;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  opacity: 0.3;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+  opacity: 0.3;
+}
+
+:-ms-input-placeholder { /* IE 10+ */
+  opacity: 0.3;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  opacity: 0.3;
+}
+
+.todo-text-sizing {
+	font-size: 1.3em;
+}
+
 .completed {
 	text-decoration: line-through;
 }
 
+input:focus {
+	outline: none;
+}
+
 li {
 	display: block;
+}
+
+/** Small devices (landscape phones, 576px and up) **/
+@media (min-width: 576px) {
+
+	main {
+		width: 60%;
+	}
+
+}
+
+/** Medium devices (tablets, 768px and up) **/
+@media (min-width: 768px) {
+	
+	main {
+		width: 50%;
+	}
+}
+
+/** Large devices (desktops, 992px and up) **/
+@media (min-width: 992px) { 
+
+	main {
+		width: 30%;
+	}
+
 }
