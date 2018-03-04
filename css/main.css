@@ -24,6 +24,7 @@ ul {
 
 li {
 	display: flex;
+	align-items: baseline;
 	padding: 0.25em;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -31,6 +32,26 @@ li {
 li label {
 	margin-right: auto;
 	padding-left: 0.25em;
+}
+
+li button {
+	border: none;
+	height: 2em;
+	color: firebrick;
+	font-size: 0.8em;
+	visibility: hidden;
+}
+
+li button:hover {
+	cursor: pointer;
+}
+
+li:hover button {
+	visibility: visible;
+}
+
+button:focus {
+	outline: none;
 }
 
 input:focus {
@@ -86,7 +107,7 @@ input:focus {
 }
 
 .todo-footer button {
-	margin: 0 0 0.5em;
+	margin-bottom: 0.5em;
 }
 
 /** Small devices (landscape phones, 576px and up) **/
