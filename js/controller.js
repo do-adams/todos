@@ -12,15 +12,29 @@ class Controller {
 
 		this.view.$newTodo.addEventListener('keypress', function(e) {
 			if (e.keyCode === self._ENTER_KEY) {
-				const todoItem = self.createTodoItem(this.value); 
-				self.view.$todoList.appendChild(todoItem);
+				const todo = self.createTodo(this.value); 
+				self.view.$todoList.appendChild(todo);
 				this.value = '';
-				self.updateViewItemCount();
+				self.updateViewTodosCount();
 			}
+		});
+
+		this.view.$todoList.addEventListener('click', function(e) {
+			const target = e.target;
+			const tagName = target.tagName;
+
+			if (tagName === 'INPUT') {
+				const label = target.parentNode.querySelector('label');
+				label.classList.toggle('completed');
+			} else if (tagName === 'BUTTON') {
+				const todo = target.parentNode;
+				self.view.$todoList.removeChild(todo);
+			}
+			self.updateViewTodosCount();
 		});
 	}
 
-	createTodoItem(text) {
+	createTodo(text) {
 		const todo = document.createElement('li');
 
 		const checkbox = document.createElement('input');
@@ -38,8 +52,10 @@ class Controller {
 		return todo;
 	}
 
-	updateViewItemCount() {
-		this.view.todoFooter.$itemCounter.textContent = 
-		this.view.$todoList.childElementCount;
+	updateViewTodosCount() {
+		const activeTodos = 
+		this.view.$todoList.querySelectorAll('li label:not(.completed)');
+
+		this.view.todoFooter.$itemCounter.textContent = activeTodos.length;
 	}
 }
