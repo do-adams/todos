@@ -11,6 +11,7 @@ class Controller {
 	}
 
 	setViewEvents() {
+		this.view.$checkAllIcon.addEventListener('click', this.checkAllHandler.bind(this));
 		this.view.$newTodo.addEventListener('keypress', this.newTodoHandler.bind(this));
 		this.view.$todoList.addEventListener('click', this.todoEventHandler.bind(this));
 		this.view.todoFooter.$allFilter.addEventListener('click', this.todosDisplayFilterHandler.bind(this));
@@ -19,16 +20,30 @@ class Controller {
 		this.view.todoFooter.$clearCompletedBtn.addEventListener('click', this.clearCompletedBtnHandler.bind(this));
 	}
 
-	toggleCheckboxElem($checkboxElem) {
+	// Status is an optional argument to be used when explicitly specifying a desired status for the checkbox.
+	toggleCheckboxElem($todo, status) {
 		// Toggle the checkbox element by changing the css classes (font-awesome)
-		if ($checkboxElem.className.includes('far')) {
+		const $checkboxElem = $todo.querySelector('i');
+
+		if (status === undefined) {
+			if ($checkboxElem.className.includes('far')) {
+				$checkboxElem.className = '';
+				$checkboxElem.classList.add('fas');
+				$checkboxElem.classList.add('fa-check-circle');
+			} else if ($checkboxElem.className.includes('fas')) {
+				$checkboxElem.className = '';
+				$checkboxElem.classList.add('far');
+				$checkboxElem.classList.add('fa-circle');
+			}
+		} else {
 			$checkboxElem.className = '';
-			$checkboxElem.classList.add('fas');
-			$checkboxElem.classList.add('fa-check-circle');
-		} else if ($checkboxElem.className.includes('fas')) {
-			$checkboxElem.className = '';
-			$checkboxElem.classList.add('far');
-			$checkboxElem.classList.add('fa-circle');
+			if (status === 'checked') {
+				$checkboxElem.classList.add('fas');
+				$checkboxElem.classList.add('fa-check-circle');
+			} else if (status === 'unchecked') {
+				$checkboxElem.classList.add('far');
+				$checkboxElem.classList.add('fa-circle');
+			}
 		}
 	}
 
@@ -115,6 +130,32 @@ class Controller {
 		this.filterTodosBy($selectedFilter);
 	}
 
+	checkAllHandler(e) {
+		// Toggle the completed status for all filtered (visible) todos
+		const todos = this.view.$todoList.children;
+		const completed = this.view.$todoList.querySelectorAll('.completed');
+		const visibleTodos = [];
+
+		for(let i = 0; i < todos.length; i++) {
+			if (todos[i].className.includes('display-none')) continue;
+			visibleTodos.push(todos[i]);
+		}
+
+		if (completed.length === visibleTodos.length) {
+			visibleTodos.forEach((e) => {
+				e.classList.remove('completed');
+				this.toggleCheckboxElem(e, 'unchecked');
+			});
+		} else {
+			visibleTodos.forEach((e) => {
+				e.classList.add('completed');
+				this.toggleCheckboxElem(e, 'checked');
+			});
+		}
+		this.refreshTodosFilter();
+		this.updateTodosFooter();
+	}
+
 	newTodoHandler(e) {
 		const inputValue = e.target.value.trim();
 
@@ -133,7 +174,7 @@ class Controller {
 		const $todo = $target.parentNode;
 
 		if (tagName === 'I') {
-			this.toggleCheckboxElem($target);
+			this.toggleCheckboxElem($todo);
 			$todo.classList.toggle('completed');
 			this.refreshTodosFilter();
 		} else if (tagName === 'BUTTON') {

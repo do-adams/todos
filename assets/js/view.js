@@ -2,6 +2,7 @@
 
 class View {
 	constructor() {
+		this.$checkAllIcon = document.querySelector('.check-all');
 		this.$newTodo = document.querySelector('.new-todo');
 		this.$todoList = document.querySelector('.todo-list');
 		this.todoFooter = {
