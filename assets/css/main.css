@@ -100,9 +100,20 @@ input:focus {
 	margin-top: 0.4em;
 }
 
-.fa-circle,
+.fa-angle-down:hover {
+	opacity: 0.4;
+}
+
+.fa-circle {
+	opacity: 0.2;
+}
+
+.fa-circle:hover {
+	opacity: 0.4;
+}
+
 .fa-check-circle {
-	opacity: 0.3;
+	color: #ABC8C0;
 }
 
 /* Styling for completed todo text */
