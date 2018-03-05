@@ -1,4 +1,5 @@
 'use strict';
 
-const controller = new Controller(new View());
-controller.setViewEventHandlers();
+const view = new View();
+const controller = new Controller(view);
+controller.setView();

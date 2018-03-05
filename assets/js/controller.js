@@ -3,93 +3,24 @@
 class Controller {
 	constructor(view) {
 		this._ENTER_KEY = 13;
-
 		this.view = view;
 	}
 
-	setViewEventHandlers() {
-		const self = this;
+	setView() {
+		this.setViewEvents();
+	}
 
-		this.view.$newTodo.addEventListener('keypress', function(e) {
-			const inputValue = this.value.trim();
-
-			if (e.keyCode === self._ENTER_KEY && inputValue !== '') {
-				const $todo = self.createTodoElem(inputValue); 
-				self.view.$todoList.appendChild($todo);
-				this.value = '';
-				self.updateTodosFooter();
-			}
-		});
-
-		this.view.$todoList.addEventListener('click', function(e) {
-			const $target = e.target;
-			const tagName = $target.tagName;
-
-			if (tagName === 'I') {
-				self.toggleCheckboxElem($target);
-				const $todo = $target.parentNode;
-				$todo.classList.toggle('completed');
-			} else if (tagName === 'BUTTON') {
-				const $todo = $target.parentNode;
-				self.view.$todoList.removeChild($todo);
-			}
-			self.updateTodosFooter();
-		});
-
-		this.view.todoFooter.$allFilter.addEventListener('click', function() {
-			self.toggleFilterSelectionOff();
-			this.classList.add('selected');
-
-			const todos = self.view.$todoList.children;
-			for(let i = 0; i < todos.length; i++) {
-				todos[i].style.display = 'flex';
-			}
-		});
-
-		this.view.todoFooter.$activeFilter.addEventListener('click', function() {
-			self.toggleFilterSelectionOff();
-			this.classList.add('selected');
-
-			const todos = self.view.$todoList.children;
-			for(let i = 0; i < todos.length; i++) {
-				if (todos[i].className.includes('completed')) {
-					todos[i].style.display = 'none';
-				} else {
-					todos[i].style.display = 'flex';
-				}
-			}
-		});
-
-		this.view.todoFooter.$completedFilter.addEventListener('click', function() {
-			self.toggleFilterSelectionOff();
-			this.classList.add('selected');
-
-			const todos = self.view.$todoList.children;
-			for(let i = 0; i < todos.length; i++) {
-				if (!todos[i].className.includes('completed')) {
-					todos[i].style.display = 'none';
-				} else {
-					todos[i].style.display = 'flex';
-				}
-			}
-		});
-
-		this.view.todoFooter.$clearCompletedBtn.addEventListener('click', function() {
-			const todos = self.view.$todoList.children;
-			let index = [];
-			for(let i = 0; i < todos.length; i++) {
-				if (todos[i].className.includes('completed')) {
-					index.push(todos[i]);
-				}
-			}
-			for(let todo of index) {
-				self.view.$todoList.removeChild(todo);
-			}
-			self.updateTodosFooter();
-		});
+	setViewEvents() {
+		this.view.$newTodo.addEventListener('keypress', this.newTodoHandler.bind(this));
+		this.view.$todoList.addEventListener('click', this.todoEventHandler.bind(this));
+		this.view.todoFooter.$allFilter.addEventListener('click', this.todosDisplayFilterHandler.bind(this));
+		this.view.todoFooter.$activeFilter.addEventListener('click', this.todosDisplayFilterHandler.bind(this));
+		this.view.todoFooter.$completedFilter.addEventListener('click', this.todosDisplayFilterHandler.bind(this));
+		this.view.todoFooter.$clearCompletedBtn.addEventListener('click', this.clearCompletedBtnHandler.bind(this));
 	}
 
 	toggleCheckboxElem($checkboxElem) {
+		// Toggle the checkbox element by changing the css classes (font-awesome)
 		if ($checkboxElem.className.includes('far')) {
 			$checkboxElem.className = '';
 			$checkboxElem.classList.add('fas');
@@ -122,6 +53,7 @@ class Controller {
 	}
 
 	updateTodosFooter() {
+		// Set visibility of todo footer
 		const todos = this.view.$todoList.querySelectorAll('li');
 		if (todos.length > 0) {
 			this.view.todoFooter.$todoFooter.classList.remove('display-none');
@@ -129,10 +61,12 @@ class Controller {
 			this.view.todoFooter.$todoFooter.classList.add('display-none');
 		}
 
+		// Update todo footer counter
 		const activeTodos = 
 		this.view.$todoList.querySelectorAll('li:not(.completed)');
 		this.view.todoFooter.$todoCounter.textContent = activeTodos.length;
 
+		// Set visibility of the 'Clear completed' footer button
 		const completedTodos = this.view.$todoList.querySelectorAll('.completed');
 		if (completedTodos.length > 0) {
 			this.view.todoFooter.$clearCompletedBtn.classList.remove('hidden');
@@ -141,8 +75,72 @@ class Controller {
 		}
 	}
 
-	toggleFilterSelectionOff() {
+	newTodoHandler(e) {
+		const inputValue = e.target.value.trim();
+
+		if (e.keyCode === this._ENTER_KEY && inputValue !== '') {
+			const $todo = this.createTodoElem(inputValue); 
+			this.view.$todoList.appendChild($todo);
+			e.target.value = '';
+		}
+		this.updateTodosFooter();
+	}
+
+	todoEventHandler(e) {
+		const $target = e.target;
+		const tagName = $target.tagName;
+		const $todo = $target.parentNode;
+
+		if (tagName === 'I') {
+			this.toggleCheckboxElem($target);
+			$todo.classList.toggle('completed');
+		} else if (tagName === 'BUTTON') {
+			this.view.$todoList.removeChild($todo);
+		}
+		this.updateTodosFooter();
+	}
+
+	todosDisplayFilterHandler(e) {
 		const $selectedFilter = document.querySelector('.todo-footer .selected');
 		$selectedFilter.classList.remove('selected');
+		e.target.classList.add('selected');
+
+		const todos = this.view.$todoList.children;
+
+		if (e.target === this.view.todoFooter.$allFilter) {
+			for(let i = 0; i < todos.length; i++) {
+				todos[i].classList.remove('display-none');
+			}
+		} else if (e.target === this.view.todoFooter.$activeFilter) {
+			for(let i = 0; i < todos.length; i++) {
+				if (todos[i].className.includes('completed')) {
+					todos[i].classList.add('display-none');
+				} else {
+					todos[i].classList.remove('display-none');
+				}
+			}
+		} else if (e.target === this.view.todoFooter.$completedFilter) {
+			for(let i = 0; i < todos.length; i++) {
+				if (!todos[i].className.includes('completed')) {
+					todos[i].classList.add('display-none');
+				} else {
+					todos[i].classList.remove('display-none');
+				}
+			}
+		}
+	}
+
+	clearCompletedBtnHandler(e) {
+		const todos = this.view.$todoList.children;
+		let index = [];
+		for(let i = 0; i < todos.length; i++) {
+			if (todos[i].className.includes('completed')) {
+				index.push(todos[i]);
+			}
+		}
+		for(let todo of index) {
+			this.view.$todoList.removeChild(todo);
+		}
+		this.updateTodosFooter();
 	}
 }

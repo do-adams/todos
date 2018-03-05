@@ -91,6 +91,7 @@ input:focus {
 	opacity: 0.3;
 }
 
+/* Styling for completed todo text */
 .completed label {
 	text-decoration: line-through;
 }
