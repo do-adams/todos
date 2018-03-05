@@ -25,7 +25,8 @@ class Controller {
 			const $target = e.target;
 			const tagName = $target.tagName;
 
-			if (tagName === 'INPUT') {
+			if (tagName === 'I') {
+				self.toggleCheckboxElem($target);
 				const $todo = $target.parentNode;
 				$todo.classList.toggle('completed');
 			} else if (tagName === 'BUTTON') {
@@ -88,11 +89,24 @@ class Controller {
 		});
 	}
 
+	toggleCheckboxElem($checkboxElem) {
+		if ($checkboxElem.className.includes('far')) {
+			$checkboxElem.className = '';
+			$checkboxElem.classList.add('fas');
+			$checkboxElem.classList.add('fa-check-circle');
+		} else if ($checkboxElem.className.includes('fas')) {
+			$checkboxElem.className = '';
+			$checkboxElem.classList.add('far');
+			$checkboxElem.classList.add('fa-circle');
+		}
+	}
+
 	createTodoElem(text) {
 		const $todo = document.createElement('li');
 
-		const $checkbox = document.createElement('input');
-		$checkbox.type = 'checkbox';
+		const $checkbox = document.createElement('i');
+		$checkbox.classList.add('far');
+		$checkbox.classList.add('fa-circle');
 		$todo.appendChild($checkbox);
 
 		const $label = document.createElement('label');

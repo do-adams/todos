@@ -31,7 +31,7 @@ li {
 
 li label {
 	margin-right: auto;
-	padding-left: 0.25em;
+	padding-left: 0.4em;
 }
 
 li button {
@@ -40,6 +40,7 @@ li button {
 	height: 2em;
 	color: firebrick;
 	font-size: 0.8em;
+	font-weight: bold;
 	visibility: hidden;
 }
 
@@ -87,6 +88,12 @@ input:focus {
 	width: 100%;
 	padding: 0.5em;
 	box-sizing: border-box;
+}
+
+/* Styling for the font-awesome check icon */
+.fa-circle,
+.fa-check-circle {
+	opacity: 0.3;
 }
 
 .completed label {
