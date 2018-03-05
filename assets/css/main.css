@@ -1,8 +1,8 @@
-
 body {	
 	height: 100vh;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	background: linear-gradient(#FFFBF6, #ABC8C0);
+	background-attachment: fixed;
 }
 
 h1 {
@@ -14,7 +14,7 @@ h1 {
 
 main {
 	width: 82%;
-	margin: 0 auto;
+	margin: 0 auto 10rem;
 }
 
 ul {
