@@ -17,7 +17,7 @@ class Controller {
 		this.view.todoFooter.$allFilter.addEventListener('click', this.todosDisplayFilterHandler.bind(this));
 		this.view.todoFooter.$activeFilter.addEventListener('click', this.todosDisplayFilterHandler.bind(this));
 		this.view.todoFooter.$completedFilter.addEventListener('click', this.todosDisplayFilterHandler.bind(this));
-		this.view.todoFooter.$clearCompletedBtn.addEventListener('click', this.clearCompletedBtnHandler.bind(this));
+		this.view.todoFooter.$clearCompleted.addEventListener('click', this.clearCompletedHandler.bind(this));
 	}
 
 	// A checkbox has one of two statuses: checked or unchecked.
@@ -99,9 +99,9 @@ class Controller {
 		// Set visibility of the 'Clear completed' footer button
 		const completedTodos = this.view.$todoList.querySelectorAll('.completed');
 		if (completedTodos.length > 0) {
-			this.view.todoFooter.$clearCompletedBtn.classList.remove('hidden');
+			this.view.todoFooter.$clearCompleted.classList.remove('hidden');
 		} else {
-			this.view.todoFooter.$clearCompletedBtn.classList.add('hidden');
+			this.view.todoFooter.$clearCompleted.classList.add('hidden');
 		}
 	}
 
@@ -223,7 +223,7 @@ class Controller {
 		this.filterTodosBy(e.target);
 	}
 
-	clearCompletedBtnHandler(e) {
+	clearCompletedHandler(e) {
 		const todos = this.view.$todoList.children;
 		let index = [];
 		for(let i = 0; i < todos.length; i++) {

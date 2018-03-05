@@ -11,7 +11,7 @@ class View {
 			$allFilter: document.querySelector('.filter-all'),
 			$activeFilter: document.querySelector('.filter-active'),
 			$completedFilter: document.querySelector('.filter-completed'),
-			$clearCompletedBtn: document.querySelector('.clear-completed')
+			$clearCompleted: document.querySelector('.clear-completed')
 		};
 	}
 }

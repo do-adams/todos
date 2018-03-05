@@ -130,24 +130,34 @@ input:focus {
 	flex-wrap: wrap;
 	align-items: baseline;
 	justify-content: space-between;
-	padding: 0 2rem 0 0;
-	font-size: 0.7rem;
+	padding-right: 2rem;
+	font-size: 0.7em;
 }
 
-.todo-footer span {
-	margin: 1rem 0 0.5rem 0.5rem;
+.todo-footer > span {
+	margin: 1rem 0 0.5rem 2rem;
 }
 
 .todo-footer button {
-	margin-left: 0.5rem;
+	margin-right: 0.5rem;
 	margin-bottom: 0.5rem;
 	background-color: #FFF;
 	border: none;
-	border-radius: 5%;
 }
 
 .todo-footer button:hover {
 	border: 1px solid rgba(112, 86, 109, 0.5); /* RGB value of #70566D */
+	border-radius: 5%;
+}
+
+.todo-footer a {
+	margin: 0 0 0.75rem 2rem;
+	text-decoration: none;
+	color: inherit;
+}
+
+.todo-footer a:hover {
+	text-decoration: underline;
 }
 
 .todo-footer .selected {
