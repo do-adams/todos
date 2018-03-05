@@ -79,13 +79,27 @@ input:focus {
 	background-color: #FFF;
 }
 
+.new-todo-wrapper {
+	position: relative;
+}
+
 .new-todo {
 	width: 100%;
 	padding: 0.5em;
 	box-sizing: border-box;
+	padding-left: 1.5em;
 }
 
-/* Styling for the font-awesome check icon */
+/* Styling for the font-awesome icons */
+
+.fa-angle-down {
+	position: absolute;
+	opacity: 0.2;
+	font-size: 1.7em;
+	margin-left: 0.25em;
+	margin-top: 0.4em;
+}
+
 .fa-circle,
 .fa-check-circle {
 	opacity: 0.3;
