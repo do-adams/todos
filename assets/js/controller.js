@@ -75,6 +75,46 @@ class Controller {
 		}
 	}
 
+	getSelectedFilter() {
+		return document.querySelector('.todo-footer .selected');
+	}
+
+	filterTodosBy($filter) {
+		// Update the todo display with the specified filter
+		const $selectedFilter = this.getSelectedFilter();
+		$selectedFilter.classList.remove('selected');
+		$filter.classList.add('selected');
+
+		const todos = this.view.$todoList.children;
+
+		if ($filter === this.view.todoFooter.$allFilter) {
+			for(let i = 0; i < todos.length; i++) {
+				todos[i].classList.remove('display-none');
+			}
+		} else if ($filter === this.view.todoFooter.$activeFilter) {
+			for(let i = 0; i < todos.length; i++) {
+				if (todos[i].className.includes('completed')) {
+					todos[i].classList.add('display-none');
+				} else {
+					todos[i].classList.remove('display-none');
+				}
+			}
+		} else if ($filter === this.view.todoFooter.$completedFilter) {
+			for(let i = 0; i < todos.length; i++) {
+				if (!todos[i].className.includes('completed')) {
+					todos[i].classList.add('display-none');
+				} else {
+					todos[i].classList.remove('display-none');
+				}
+			}
+		}
+	}
+
+	refreshTodosFilter() {
+		const $selectedFilter = this.getSelectedFilter();
+		this.filterTodosBy($selectedFilter);
+	}
+
 	newTodoHandler(e) {
 		const inputValue = e.target.value.trim();
 
@@ -83,6 +123,7 @@ class Controller {
 			this.view.$todoList.appendChild($todo);
 			e.target.value = '';
 		}
+		this.refreshTodosFilter();
 		this.updateTodosFooter();
 	}
 
@@ -94,6 +135,7 @@ class Controller {
 		if (tagName === 'I') {
 			this.toggleCheckboxElem($target);
 			$todo.classList.toggle('completed');
+			this.refreshTodosFilter();
 		} else if (tagName === 'BUTTON') {
 			this.view.$todoList.removeChild($todo);
 		}
@@ -101,33 +143,7 @@ class Controller {
 	}
 
 	todosDisplayFilterHandler(e) {
-		const $selectedFilter = document.querySelector('.todo-footer .selected');
-		$selectedFilter.classList.remove('selected');
-		e.target.classList.add('selected');
-
-		const todos = this.view.$todoList.children;
-
-		if (e.target === this.view.todoFooter.$allFilter) {
-			for(let i = 0; i < todos.length; i++) {
-				todos[i].classList.remove('display-none');
-			}
-		} else if (e.target === this.view.todoFooter.$activeFilter) {
-			for(let i = 0; i < todos.length; i++) {
-				if (todos[i].className.includes('completed')) {
-					todos[i].classList.add('display-none');
-				} else {
-					todos[i].classList.remove('display-none');
-				}
-			}
-		} else if (e.target === this.view.todoFooter.$completedFilter) {
-			for(let i = 0; i < todos.length; i++) {
-				if (!todos[i].className.includes('completed')) {
-					todos[i].classList.add('display-none');
-				} else {
-					todos[i].classList.remove('display-none');
-				}
-			}
-		}
+		this.filterTodosBy(e.target);
 	}
 
 	clearCompletedBtnHandler(e) {
