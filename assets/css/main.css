@@ -158,6 +158,7 @@ input:focus {
 
 .todo-footer a:hover {
 	text-decoration: underline;
+	cursor: pointer;
 }
 
 .todo-footer .selected {
