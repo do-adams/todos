@@ -41,7 +41,6 @@ li button {
 	color: firebrick;
 	font-size: 0.8em;
 	font-weight: bold;
-	visibility: hidden;
 }
 
 li:hover button {
@@ -76,10 +75,6 @@ input:focus {
   opacity: 0.3;
 }
 
-.todo-text-sizing {
-	font-size: 1.3em;
-}
-
 .todo-container {
 	background-color: #FFF;
 }
@@ -94,10 +89,6 @@ input:focus {
 .fa-circle,
 .fa-check-circle {
 	opacity: 0.3;
-}
-
-.completed label {
-	text-decoration: line-through;
 }
 
 .todo-footer {
@@ -145,4 +136,22 @@ input:focus {
 		width: 40%;
 	}
 
+}
+
+/* Utility Style Classes */
+
+.todo-text-sizing {
+	font-size: 1.3em;
+}
+
+.completed label {
+	text-decoration: line-through;
+}
+
+.hidden {
+	visibility: hidden;
+}
+
+.display-none {
+	display: none;
 }

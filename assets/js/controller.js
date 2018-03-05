@@ -115,12 +115,20 @@ class Controller {
 
 		const $button = document.createElement('button');
 		$button.textContent = '×';
+		$button.classList.add('hidden');
 		$todo.appendChild($button);
 
 		return $todo;
 	}
 
 	updateTodosFooter() {
+		const todos = this.view.$todoList.querySelectorAll('li');
+		if (todos.length > 0) {
+			this.view.todoFooter.$todoFooter.classList.remove('display-none');
+		} else {
+			this.view.todoFooter.$todoFooter.classList.add('display-none');
+		}
+
 		const activeTodos = 
 		this.view.$todoList.querySelectorAll('li:not(.completed)');
 		this.view.todoFooter.$todoCounter.textContent = activeTodos.length;
