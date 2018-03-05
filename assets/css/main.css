@@ -13,7 +13,7 @@ h1 {
 }
 
 main {
-	width: 80%;
+	width: 82%;
 	margin: 0 auto;
 }
 
@@ -25,19 +25,19 @@ ul {
 li {
 	display: flex;
 	align-items: baseline;
-	padding: 0.25em;
+	padding: 0.25rem;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 li label {
 	margin-right: auto;
-	padding-left: 0.4em;
+	padding-left: 0.4rem;
 }
 
 li button {
 	background-color: #FFF;
 	border: none;
-	height: 2em;
+	height: 2rem;
 	color: #CE2D4F; /* Picked as a good contrast to #ABC8C0 */
 	font-size: 0.8em;
 	font-weight: bold;
@@ -77,7 +77,7 @@ input:focus {
 
 .todo-container {
 	background-color: #FFF;
-	box-shadow: 0 1.5em 2em rgba(0, 0, 0, 0.1);
+	box-shadow: 0 1.5rem 2rem rgba(0, 0, 0, 0.1);
 }
 
 .new-todo-wrapper {
@@ -86,9 +86,9 @@ input:focus {
 
 .new-todo {
 	width: 100%;
-	padding: 0.5em;
+	padding: 0.75rem;
 	box-sizing: border-box;
-	padding-left: 1.5em;
+	padding-left: 2rem;
 	border: none;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -99,8 +99,8 @@ input:focus {
 	position: absolute;
 	opacity: 0.2;
 	font-size: 1.7em;
-	margin-left: 0.25em;
-	margin-top: 0.4em;
+	margin-left: 0.4rem;
+	margin-top: 0.65rem;
 }
 
 .fa-angle-down:hover {
@@ -130,16 +130,17 @@ input:focus {
 	flex-wrap: wrap;
 	align-items: baseline;
 	justify-content: space-between;
-	padding: 0 2em;
-	font-size: 0.7em;
+	padding: 0 2rem 0 0;
+	font-size: 0.7rem;
 }
 
 .todo-footer span {
-	margin: 1em 0 0.5em;
+	margin: 1rem 0 0.5rem 0.5rem;
 }
 
 .todo-footer button {
-	margin-bottom: 0.5em;
+	margin-left: 0.5rem;
+	margin-bottom: 0.5rem;
 	background-color: #FFF;
 	border: none;
 	border-radius: 5%;
@@ -153,6 +154,24 @@ input:focus {
 	border: 1px solid #70566D;
 }
 
+/* Utility Style Classes */
+
+.todo-text-sizing {
+	font-size: 1.1em;
+}
+
+.hidden {
+	visibility: hidden;
+}
+
+.display-none {
+	display: none;
+}
+
+/* 
+	Media Queries
+*/
+
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
 
@@ -160,6 +179,9 @@ input:focus {
 		width: 60%;
 	}
 
+	.todo-text-sizing {
+		font-size: 1.3em;
+	}
 }
 
 /* Large devices (desktops, 992px and up) */
@@ -169,18 +191,4 @@ input:focus {
 		width: 40%;
 	}
 
-}
-
-/* Utility Style Classes */
-
-.todo-text-sizing {
-	font-size: 1.3em;
-}
-
-.hidden {
-	visibility: hidden;
-}
-
-.display-none {
-	display: none;
 }
