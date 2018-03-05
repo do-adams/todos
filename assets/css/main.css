@@ -91,6 +91,10 @@ input:focus {
 	opacity: 0.3;
 }
 
+.completed label {
+	text-decoration: line-through;
+}
+
 .todo-footer {
 	display: flex;
 	flex-direction: row;
@@ -142,10 +146,6 @@ input:focus {
 
 .todo-text-sizing {
 	font-size: 1.3em;
-}
-
-.completed label {
-	text-decoration: line-through;
 }
 
 .hidden {
