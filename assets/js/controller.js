@@ -20,6 +20,7 @@ class Controller {
 		this.view.todoFooter.$clearCompletedBtn.addEventListener('click', this.clearCompletedBtnHandler.bind(this));
 	}
 
+	// A checkbox has one of two statuses: checked or unchecked.
 	// Status is an optional argument to be used when explicitly specifying a desired status for the checkbox.
 	toggleCheckboxElem($todo, status) {
 		// Toggle the checkbox element by changing the css classes (font-awesome)
@@ -54,6 +55,8 @@ class Controller {
 				checkBox($checkbox);
 			} else if (status === 'unchecked') {
 				uncheckBox($checkbox);
+			} else {
+				throw new Error('Invalid status argument');
 			}
 		}
 	}
@@ -61,6 +64,7 @@ class Controller {
 	createTodoElem(text) {
 		const $todo = document.createElement('li');
 
+		// Add unchecked checkbox
 		const $checkbox = document.createElement('i');
 		$checkbox.classList.add('far');
 		$checkbox.classList.add('fa-circle');
@@ -141,6 +145,29 @@ class Controller {
 		this.filterTodosBy($selectedFilter);
 	}
 
+	// A todo element has one of two statuses: completed or incompleted;
+	// Status is an optional argument to be used when explicitly specifying a desired status for the checkbox.
+	toggleTodoStatus($todo, status) {
+		if (status === undefined) {
+			$todo.classList.toggle('completed');
+			this.toggleCheckboxElem($todo);
+		} else {
+			if (status === 'completed') {
+				$todo.classList.add('completed');
+				this.toggleCheckboxElem($todo, 'checked');
+			} else if (status === 'incompleted') {
+				$todo.classList.remove('completed');
+				this.toggleCheckboxElem($todo, 'unchecked');
+			} else {
+				throw new Error('Invalid status argument');
+			}
+		}
+	}
+
+	/*
+		Event Handlers
+	*/
+
 	checkAllHandler(e) {
 		// Toggle the completed status for all filtered (visible) todos
 		const todos = this.view.$todoList.children;
@@ -152,15 +179,14 @@ class Controller {
 			visibleTodos.push(todos[i]);
 		}
 
+		// If all todos are completed
 		if (completed.length === visibleTodos.length) {
 			visibleTodos.forEach((elem) => {
-				elem.classList.remove('completed');
-				this.toggleCheckboxElem(elem, 'unchecked');
+				this.toggleTodoStatus(elem, 'incompleted');
 			});
-		} else {
+		} else { // If some or none todos are completed
 			visibleTodos.forEach((elem) => {
-				elem.classList.add('completed');
-				this.toggleCheckboxElem(elem, 'checked');
+				this.toggleTodoStatus(elem, 'completed');
 			});
 		}
 		this.refreshTodosFilter();
@@ -185,8 +211,7 @@ class Controller {
 		const $todo = $target.parentNode;
 
 		if (tagName.toLowerCase() === 'i') {
-			this.toggleCheckboxElem($todo);
-			$todo.classList.toggle('completed');
+			this.toggleTodoStatus($todo);
 			this.refreshTodosFilter();
 		} else if (tagName.toLowerCase() === 'button') {
 			this.view.$todoList.removeChild($todo);
