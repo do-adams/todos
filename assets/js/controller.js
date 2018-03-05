@@ -23,26 +23,37 @@ class Controller {
 	// Status is an optional argument to be used when explicitly specifying a desired status for the checkbox.
 	toggleCheckboxElem($todo, status) {
 		// Toggle the checkbox element by changing the css classes (font-awesome)
-		const $checkboxElem = $todo.querySelector('i');
+		const $checkbox = $todo.querySelector('i');
+
+		const uncheckBox = ($cb) => {
+			$cb.classList.remove('fas');
+			$cb.classList.remove('fa-check-circle');
+
+			$cb.classList.add('far');
+			$cb.classList.add('fa-circle');
+		};
+
+		const checkBox = ($cb) => {
+			$cb.classList.remove('far');
+			$cb.classList.remove('fa-circle');
+
+			$cb.classList.add('fas');
+			$cb.classList.add('fa-check-circle');
+		};
 
 		if (status === undefined) {
-			if ($checkboxElem.className.includes('far')) {
-				$checkboxElem.className = '';
-				$checkboxElem.classList.add('fas');
-				$checkboxElem.classList.add('fa-check-circle');
-			} else if ($checkboxElem.className.includes('fas')) {
-				$checkboxElem.className = '';
-				$checkboxElem.classList.add('far');
-				$checkboxElem.classList.add('fa-circle');
+			// Toggle
+			if ($checkbox.className.includes('fa-check-circle')) {
+				uncheckBox($checkbox);
+			} else if ($checkbox.className.includes('fa-circle')) {
+				checkBox($checkbox);
 			}
 		} else {
-			$checkboxElem.className = '';
+			// Set
 			if (status === 'checked') {
-				$checkboxElem.classList.add('fas');
-				$checkboxElem.classList.add('fa-check-circle');
+				checkBox($checkbox);
 			} else if (status === 'unchecked') {
-				$checkboxElem.classList.add('far');
-				$checkboxElem.classList.add('fa-circle');
+				uncheckBox($checkbox);
 			}
 		}
 	}
@@ -142,14 +153,14 @@ class Controller {
 		}
 
 		if (completed.length === visibleTodos.length) {
-			visibleTodos.forEach((e) => {
-				e.classList.remove('completed');
-				this.toggleCheckboxElem(e, 'unchecked');
+			visibleTodos.forEach((elem) => {
+				elem.classList.remove('completed');
+				this.toggleCheckboxElem(elem, 'unchecked');
 			});
 		} else {
-			visibleTodos.forEach((e) => {
-				e.classList.add('completed');
-				this.toggleCheckboxElem(e, 'checked');
+			visibleTodos.forEach((elem) => {
+				elem.classList.add('completed');
+				this.toggleCheckboxElem(elem, 'checked');
 			});
 		}
 		this.refreshTodosFilter();
@@ -173,11 +184,11 @@ class Controller {
 		const tagName = $target.tagName;
 		const $todo = $target.parentNode;
 
-		if (tagName === 'I') {
+		if (tagName.toLowerCase() === 'i') {
 			this.toggleCheckboxElem($todo);
 			$todo.classList.toggle('completed');
 			this.refreshTodosFilter();
-		} else if (tagName === 'BUTTON') {
+		} else if (tagName.toLowerCase() === 'button') {
 			this.view.$todoList.removeChild($todo);
 		}
 		this.updateTodosFooter();
