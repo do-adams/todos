@@ -77,6 +77,7 @@ input:focus {
 
 .todo-container {
 	background-color: #FFF;
+	box-shadow: 0 1.5em 2em rgba(0, 0, 0, 0.1);
 }
 
 .new-todo-wrapper {
@@ -84,12 +85,12 @@ input:focus {
 }
 
 .new-todo {
-	border: none;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	width: 100%;
 	padding: 0.5em;
 	box-sizing: border-box;
 	padding-left: 1.5em;
+	border: none;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* Styling for the font-awesome icons */
