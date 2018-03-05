@@ -38,7 +38,7 @@ li button {
 	background-color: #FFF;
 	border: none;
 	height: 2em;
-	color: firebrick;
+	color: #CE2D4F; /* Picked as a good contrast to #ABC8C0 */
 	font-size: 0.8em;
 	font-weight: bold;
 }
