@@ -6,17 +6,33 @@ class Controller {
 		this.view = view;
 	}
 
+	/* 
+		Setup
+	*/
+
+	/**
+	 * Executes an application (function) in the context of this object
+	 * and updates the view screen.
+	 */
+	updateViewAfterEvent(func) {
+		return (function(event) {
+			func.call(this, event);
+			this.updateFilteredTodos();
+			this.updateTodosFooter();
+		}).bind(this);
+	}
+
 	setView() {
 		this.setViewEvents();
 	}
 
 	setViewEvents() {
 		this.view.$checkAllIcon.addEventListener(
-			'click', this.checkAllHandler.bind(this));
+			'click', this.updateViewAfterEvent(this.checkAllHandler));
 		this.view.$newTodo.addEventListener(
-			'keypress', this.newTodoHandler.bind(this));
+			'keypress', this.updateViewAfterEvent(this.newTodoHandler));
 		this.view.$todoList.addEventListener(
-			'click', this.todoEventHandler.bind(this));
+			'click', this.updateViewAfterEvent(this.todoEventHandler));
 		this.view.todoFooter.$allFilter.addEventListener(
 			'click', this.todosDisplayFilterHandler.bind(this));
 		this.view.todoFooter.$activeFilter.addEventListener(
@@ -24,8 +40,12 @@ class Controller {
 		this.view.todoFooter.$completedFilter.addEventListener(
 			'click', this.todosDisplayFilterHandler.bind(this));
 		this.view.todoFooter.$clearCompleted.addEventListener(
-			'click', this.clearCompletedHandler.bind(this));
+			'click', this.updateViewAfterEvent(this.clearCompletedHandler));
 	}
+
+	/* 
+		Todo Creation and Management
+	*/
 
 	/** A checkbox has one of two statuses: checked or unchecked.
 	 * Status is an optional argument to be used when explicitly 
@@ -149,7 +169,7 @@ class Controller {
 		}
 	}
 
-	refreshTodosFilter() {
+	updateFilteredTodos() {
 		const $selectedFilter = this.getSelectedFilter();
 		this.filterTodosBy($selectedFilter);
 	}
@@ -200,8 +220,6 @@ class Controller {
 				this.toggleTodoStatus(elem, 'completed');
 			});
 		}
-		this.refreshTodosFilter();
-		this.updateTodosFooter();
 	}
 
 	newTodoHandler(e) {
@@ -212,8 +230,6 @@ class Controller {
 			this.view.$todoList.appendChild($todo);
 			e.target.value = '';
 		}
-		this.refreshTodosFilter();
-		this.updateTodosFooter();
 	}
 
 	todoEventHandler(e) {
@@ -223,11 +239,9 @@ class Controller {
 
 		if (tagName.toLowerCase() === 'i') {
 			this.toggleTodoStatus($todo);
-			this.refreshTodosFilter();
 		} else if (tagName.toLowerCase() === 'button') {
 			this.view.$todoList.removeChild($todo);
 		}
-		this.updateTodosFooter();
 	}
 
 	todosDisplayFilterHandler(e) {
@@ -245,6 +259,5 @@ class Controller {
 		for(let todo of index) {
 			this.view.$todoList.removeChild(todo);
 		}
-		this.updateTodosFooter();
 	}
 }
