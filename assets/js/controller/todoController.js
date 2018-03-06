@@ -11,17 +11,26 @@ class Controller {
 	}
 
 	setViewEvents() {
-		this.view.$checkAllIcon.addEventListener('click', this.checkAllHandler.bind(this));
-		this.view.$newTodo.addEventListener('keypress', this.newTodoHandler.bind(this));
-		this.view.$todoList.addEventListener('click', this.todoEventHandler.bind(this));
-		this.view.todoFooter.$allFilter.addEventListener('click', this.todosDisplayFilterHandler.bind(this));
-		this.view.todoFooter.$activeFilter.addEventListener('click', this.todosDisplayFilterHandler.bind(this));
-		this.view.todoFooter.$completedFilter.addEventListener('click', this.todosDisplayFilterHandler.bind(this));
-		this.view.todoFooter.$clearCompleted.addEventListener('click', this.clearCompletedHandler.bind(this));
+		this.view.$checkAllIcon.addEventListener(
+			'click', this.checkAllHandler.bind(this));
+		this.view.$newTodo.addEventListener(
+			'keypress', this.newTodoHandler.bind(this));
+		this.view.$todoList.addEventListener(
+			'click', this.todoEventHandler.bind(this));
+		this.view.todoFooter.$allFilter.addEventListener(
+			'click', this.todosDisplayFilterHandler.bind(this));
+		this.view.todoFooter.$activeFilter.addEventListener(
+			'click', this.todosDisplayFilterHandler.bind(this));
+		this.view.todoFooter.$completedFilter.addEventListener(
+			'click', this.todosDisplayFilterHandler.bind(this));
+		this.view.todoFooter.$clearCompleted.addEventListener(
+			'click', this.clearCompletedHandler.bind(this));
 	}
 
-	// A checkbox has one of two statuses: checked or unchecked.
-	// Status is an optional argument to be used when explicitly specifying a desired status for the checkbox.
+	/** A checkbox has one of two statuses: checked or unchecked.
+	 * Status is an optional argument to be used when explicitly 
+	 * specifying a desired status for the checkbox.
+	 */
 	toggleCheckboxElem($todo, status) {
 		// Toggle the checkbox element by changing the css classes (font-awesome)
 		const $checkbox = $todo.querySelector('i');
@@ -145,8 +154,10 @@ class Controller {
 		this.filterTodosBy($selectedFilter);
 	}
 
-	// A todo element has one of two statuses: completed or incompleted;
-	// Status is an optional argument to be used when explicitly specifying a desired status for the checkbox.
+	/** A todo element has one of two statuses: completed or incompleted.
+	 * Status is an optional argument to be used when explicitly 
+	 * specifying a desired status for the checkbox.
+	 */
 	toggleTodoStatus($todo, status) {
 		if (status === undefined) {
 			$todo.classList.toggle('completed');
