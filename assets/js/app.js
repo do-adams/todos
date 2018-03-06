@@ -1,5 +1,5 @@
 'use strict';
 
-const view = new View();
-const controller = new Controller(view);
+const view = new TodoView();
+const controller = new TodoController(view);
 controller.setView();

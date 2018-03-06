@@ -1,6 +1,6 @@
 'use strict';
 
-class Controller {
+class TodoController {
 	constructor(view) {
 		this._ENTER_KEY = 13;
 		this.view = view;

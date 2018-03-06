@@ -1,6 +1,6 @@
 'use strict';
 
-class View {
+class TodoView {
 	constructor() {
 		this.$checkAllIcon = document.querySelector('.check-all');
 		this.$newTodo = document.querySelector('.new-todo');
