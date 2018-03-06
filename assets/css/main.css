@@ -55,7 +55,7 @@ li {
 
 li label {
 	margin-right: auto;
-	padding-left: 0.4rem;
+	padding-left: 1rem;
 }
 
 li button {
@@ -110,7 +110,7 @@ input:focus {
 
 .new-todo {
 	width: 100%;
-	padding: 0.9rem 0.75rem 0.9rem 2rem;
+	padding: 0.9rem 0.75rem 0.9rem 2.6rem;
 	box-sizing: border-box;
 	border: none;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -164,7 +164,7 @@ input:focus {
 }
 
 .todo-footer > span {
-	margin: 1rem 0 0.5rem 2rem;
+	margin: 1rem 0 0.5rem 2.6rem;
 }
 
 .todo-footer button {
@@ -180,7 +180,7 @@ input:focus {
 }
 
 .todo-footer a {
-	margin: 0 0 0.75rem 2rem;
+	margin: 0 0 0.75rem 2.6rem;
 }
 
 .todo-footer .selected {
