@@ -3,6 +3,9 @@ body {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	background: linear-gradient(#FFFBF6, #ABC8C0);
 	background-attachment: fixed;
+
+	display: flex;
+	flex-direction: column;
 }
 
 h1 {
@@ -15,6 +18,27 @@ h1 {
 main {
 	width: 82%;
 	margin: 0 auto 10rem;
+	flex-grow: 1;
+	flex-shrink: 0;
+}
+
+body > footer {
+	margin-bottom: 2rem;
+	color: #70566D;
+	opacity: 0.8;
+	text-align: center;
+	font-size: 0.6em;
+	flex-shrink: 0;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+a:hover {
+	text-decoration: underline;
+	cursor: pointer;
 }
 
 ul {
@@ -152,13 +176,6 @@ input:focus {
 
 .todo-footer a {
 	margin: 0 0 0.75rem 2rem;
-	text-decoration: none;
-	color: inherit;
-}
-
-.todo-footer a:hover {
-	text-decoration: underline;
-	cursor: pointer;
 }
 
 .todo-footer .selected {
