@@ -49,7 +49,7 @@ ul {
 li {
 	display: flex;
 	align-items: baseline;
-	padding: 0.25rem;
+	padding:  0.5rem 0.25rem 0.5rem;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -110,11 +110,12 @@ input:focus {
 
 .new-todo {
 	width: 100%;
-	padding: 0.75rem;
+	padding: 0.9rem 0.75rem 0.9rem;
 	box-sizing: border-box;
 	padding-left: 2rem;
 	border: none;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03)
 }
 
 /* Styling for the font-awesome icons */
