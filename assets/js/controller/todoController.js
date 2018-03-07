@@ -17,9 +17,10 @@ class TodoController {
 	 */
 	updateViewAfterEvent(func) {
 		return (function(event) {
-			func.call(this, event);
+			const result = func.call(this, event);
 			this.updateFilteredTodos();
 			this.updateTodosFooter();
+			return result;
 		}).bind(this);
 	}
 

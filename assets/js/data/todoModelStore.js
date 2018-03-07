@@ -2,49 +2,81 @@
 
 class TodoModelStore {
     constructor() {
-        // A numeric value denoting the index (key) of the last todo item in the store
-        this._lastKey = Object.keys(window.localStorage).length - 1;
+        this._storeKey = 'todo-store';
+        this._store = [];
+        this._localStorage = window.localStorage;
+    }
 
-        this.localStorage = window.localStorage;
+    /** 
+     * Loads the store data from local storage.
+    */
+    initialize() {
+        const data = JSON.parse(this._localStorage.getItem(this._storeKey));
+        this._store = data == null ? [] : data;
+    }
+
+    get _lastIndex() {
+        return this._store.length - 1;
     }
 
     isValidKey(key) {
-        return key >= 0 && key <= this._lastKey;
+        return key >= 0 && key <= this._lastIndex;
     }
 
+    /**
+     * Executes an action in the context of this object
+     * and saves the changes in the store
+     * to the local storage.
+     */
+    _saveToLocalStorage(func) {
+        const result = func.call(this);
+        this._localStorage.setItem(this._storeKey, JSON.stringify(this._store));
+        return result;
+    }
+
+    /**
+     * 
+     * @returns  A key value for the newly added todo.
+     */
     addTodo(todo) {
-        this.localStorage.setItem(++this._lastKey, JSON.stringify(todo));
-        return this._lastKey;
+        return this._saveToLocalStorage(() => {
+            this._store.push(todo);
+            return this._lastIndex;
+        });
     }
 
+    /**
+     * Modifies an existing todo in the store.
+     */
     setTodo(key, todo) {
-        if (!this.isValidKey(key)) throw new Error('Invalid key argument value');
-        this.localStorage.setItem(key, JSON.stringify(todo));
+        return this._saveToLocalStorage(() => {
+            if (!this.isValidKey(key)) throw new Error('Invalid key argument value');
+            this._store.splice(key, 1, todo);
+        });
     }
 
     getTodo(key) {
         if (!this.isValidKey(key)) throw new Error('Invalid key argument value');
-        return JSON.parse(this.localStorage.getItem(key));
+        return this._store[key];
     }
 
+    /** 
+     * @returns An ordered array of all todos.
+    */
     getAllTodos() {
-        const todos = [];
-        const keys = Object.keys(this.localStorage);
-        for(let key in keys) {
-            const todo = JSON.parse(this.localStorage.getItem(key));
-            this.todos.push({
-                [key]: todo
-            });
-        }
-        return this.todos;
+        return this._store;
     }
 
     removeTodo(key) {
-        if (!this.isValidKey(key)) throw new Error('Invalid key argument value');
-        this.localStorage.removeItem(key);
+        return this._saveToLocalStorage(() => {
+            if (!this.isValidKey(key)) throw new Error('Invalid key argument value');
+            this._store.splice(key, 1);
+        });
     }
 
     clearAllTodos() {
-        this.localStorage.clear();
+        return this._saveToLocalStorage(() => {
+            this._store = [];
+        });
     }
 }
