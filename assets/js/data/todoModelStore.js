@@ -27,6 +27,8 @@ class TodoModelStore {
      * Executes an action in the context of this object
      * and saves the changes in the store
      * to the local storage.
+     * 
+     * Not the most performant solution, but it sure is comfy.
      */
     _saveToLocalStorage(func) {
         const result = func.call(this);
