@@ -12,7 +12,8 @@ class TodoController {
 	*/
 
 	/**
-	 * Executes an application (function) in the context of this object
+	 * Returns a function that 
+	 * executes an application in the context of this object
 	 * and updates the view screen.
 	 */
 	_updateViewAfterEvent(func) {
@@ -24,8 +25,20 @@ class TodoController {
 		}).bind(this);
 	}
 
-	setView() {
+	initialize() {
 		this._setViewEvents();
+		this._store.initialize();
+		this._fillView(this._store);
+	}
+
+	_fillView(store) {
+		return this._updateViewAfterEvent(() => {
+			const todos = store.getAllTodos();
+			todos.forEach((t, i) => {
+				const todo = this._loadTodoElem(i, t);
+				this._view.$todoList.appendChild(todo);
+			});
+		})();
 	}
 
 	_setViewEvents() {
@@ -52,10 +65,13 @@ class TodoController {
 	/** A checkbox has one of two statuses: checked or unchecked.
 	 * Status is an optional argument to be used when explicitly 
 	 * specifying a desired status for the checkbox.
+	 * 
+	 * @returns True if the element is checked, false if unchecked.
 	 */
-	_toggleCheckboxElem($todo, status) {
+_toggleCheckboxElem($todo, status) {
 		// Toggle the checkbox element by changing the css classes (font-awesome)
 		const $checkbox = $todo.querySelector('i');
+		let cbValue;
 
 		const uncheckBox = ($cb) => {
 			$cb.classList.remove('fas');
@@ -63,6 +79,8 @@ class TodoController {
 
 			$cb.classList.add('far');
 			$cb.classList.add('fa-circle');
+
+			cbValue = false;
 		};
 
 		const checkBox = ($cb) => {
@@ -71,6 +89,8 @@ class TodoController {
 
 			$cb.classList.add('fas');
 			$cb.classList.add('fa-check-circle');
+
+			cbValue = true
 		};
 
 		if (status === undefined) {
@@ -90,9 +110,14 @@ class TodoController {
 				throw new Error('Invalid status argument');
 			}
 		}
+
+		return cbValue;
 	}
 
-	_createTodoElem(text) {
+	/**
+	 * Builds a generic unchecked and unindexed todo element.
+	 */
+	_buildTodoElem(text) {
 		const $todo = document.createElement('li');
 
 		// Add unchecked checkbox
@@ -109,6 +134,34 @@ class TodoController {
 		$button.textContent = '×';
 		$button.classList.add('hidden');
 		$todo.appendChild($button);
+
+		return $todo;
+	}
+
+	/**
+	 * Creates an indexed todo element based on model data from the store.
+	 */
+	_loadTodoElem(key, model) {
+		const $todo = this._buildTodoElem(model.text);
+		$todo.setAttribute('data-index', key);
+		const status = model.isCompleted ? 'completed' : 'uncompleted';
+		this._toggleTodoStatus($todo, status);
+		return $todo;
+	}
+
+	/**
+	 * 
+	 * Creates a new indexed todo element and saves it to the store
+	 */
+	_createNewTodo(text, isCompleted) {
+		const $todo = this._buildTodoElem(text);
+
+		const model = new TodoModel(text, isCompleted);
+		const key = this._store.addTodo(model);
+		$todo.setAttribute('data-index', key);
+
+		const status = isCompleted ? 'completed' : 'uncompleted';
+		this._toggleTodoStatus($todo, status);
 
 		return $todo;
 	}
@@ -140,6 +193,11 @@ class TodoController {
 		return document.querySelector('.todo-footer .selected');
 	}
 
+	/**
+	 * 
+	 * Sets the visibility of the todo elements according to the specified
+	 * filter.  
+	 */
 	_filterTodosBy($filter) {
 		// Update the todo display with the specified filter
 		const $selectedFilter = this._getSelectedFilter();
@@ -176,25 +234,56 @@ class TodoController {
 		this._filterTodosBy($selectedFilter);
 	}
 
-	/** A todo element has one of two statuses: completed or incompleted.
+	/** An indexed todo element has one of two statuses: completed or uncompleted.
 	 * Status is an optional argument to be used when explicitly 
 	 * specifying a desired status for the checkbox.
+	 * 
+	 * Automatically updates the status of the indexed todo model in the store.
+	 * 
+	 * @returns True if the todo is completed, false if the todo is uncompleted
 	 */
 	_toggleTodoStatus($todo, status) {
+		let isCompleted;
+
+		// Set the completed status for the element
 		if (status === undefined) {
 			$todo.classList.toggle('completed');
-			this._toggleCheckboxElem($todo);
+			isCompleted = this._toggleCheckboxElem($todo);
 		} else {
 			if (status === 'completed') {
 				$todo.classList.add('completed');
-				this._toggleCheckboxElem($todo, 'checked');
-			} else if (status === 'incompleted') {
+				isCompleted = this._toggleCheckboxElem($todo, 'checked');
+			} else if (status === 'uncompleted') {
 				$todo.classList.remove('completed');
-				this._toggleCheckboxElem($todo, 'unchecked');
+				isCompleted = this._toggleCheckboxElem($todo, 'unchecked');
 			} else {
 				throw new Error('Invalid status argument');
 			}
 		}
+
+		// Save the toggle changes to the store
+		const key = $todo.dataset.index;
+		if (key == undefined) {
+			throw new Error('data-index property not found on todo element');
+		}
+		
+		const todoModel = this._store.getTodo(key);
+		todoModel.isCompleted = isCompleted;
+		this._store.setTodo(key, todoModel);
+
+		return isCompleted;
+	}
+
+	/**
+	 * Removes an indexed todo element from the view and the store.
+	 */
+	_removeTodoElem($todo) {
+		const key = $todo.dataset.index;
+		if (key == undefined) {
+			throw new Error('data-index property not found on todo element');
+		}
+		this._view.$todoList.removeChild($todo);
+		this._store.removeTodo(key);
 	}
 
 	/*
@@ -215,7 +304,7 @@ class TodoController {
 		// If all todos are completed
 		if (completed.length === visibleTodos.length) {
 			visibleTodos.forEach((elem) => {
-				this._toggleTodoStatus(elem, 'incompleted');
+				this._toggleTodoStatus(elem, 'uncompleted');
 			});
 		} else { // If some or none todos are completed
 			visibleTodos.forEach((elem) => {
@@ -228,7 +317,7 @@ class TodoController {
 		const inputValue = e.target.value.trim();
 
 		if (e.keyCode === this._ENTER_KEY && inputValue !== '') {
-			const $todo = this._createTodoElem(inputValue); 
+			const $todo = this._createNewTodo(inputValue, false); 
 			this._view.$todoList.appendChild($todo);
 			e.target.value = '';
 		}
@@ -237,12 +326,14 @@ class TodoController {
 	_todoEventHandler(e) {
 		const $target = e.target;
 		const tagName = $target.tagName;
-		const $todo = $target.parentNode;
+		let $todo;
 
 		if (tagName.toLowerCase() === 'i') {
+			$todo = $target.parentNode;
 			this._toggleTodoStatus($todo);
 		} else if (tagName.toLowerCase() === 'button') {
-			this._view.$todoList.removeChild($todo);
+			$todo = $target.parentNode;
+			this._removeTodoElem($todo);
 		}
 	}
 
@@ -258,8 +349,8 @@ class TodoController {
 				index.push(todos[i]);
 			}
 		}
-		for(let todo of index) {
-			this._view.$todoList.removeChild(todo);
+		for(let $todo of index) {
+			this._removeTodoElem($todo)
 		}
 	}
 }
