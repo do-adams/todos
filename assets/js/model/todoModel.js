@@ -1,7 +1,9 @@
 'use strict';
 
 class TodoModel {
-    constructor() {
-        this.text = '';
+    constructor(text, isCompleted) {
+        this.index = -1;
+        this.text = text;
+        this.isCompleted = isCompleted;
     }
 }

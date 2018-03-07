@@ -27,16 +27,17 @@ class TodoController {
 
 	initialize() {
 		this._setViewEvents();
-		this._store.initialize();
 		this._fillView(this._store);
 	}
 
 	_fillView(store) {
 		return this._updateViewAfterEvent(() => {
 			const todos = store.getAllTodos();
-			todos.forEach((t, i) => {
-				const todo = this._loadTodoElem(i, t);
-				this._view.$todoList.appendChild(todo);
+			todos.forEach((t) => {
+				const key = t.key;
+				const todo = t.todo;
+				const $todo = this._loadTodoElem(key, todo);
+				this._view.$todoList.appendChild($todo);
 			});
 		})();
 	}
