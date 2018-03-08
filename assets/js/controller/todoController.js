@@ -63,18 +63,18 @@ class TodoController {
 		Todo Creation and Management
 	*/
 
-	/** A checkbox has one of two statuses: checked or unchecked.
-	 * Status is an optional argument to be used when explicitly 
-	 * specifying a desired status for the checkbox.
-	 * 
+	/** 
+	 * Toggles the checkbox element in a todo element.
+	 * @param {boolean} [checked] - Optional parameter when the checked status 
+	 * is to be explicitly set by the caller to either checked or unchecked.
 	 * @returns True if the element is checked, false if unchecked.
 	 */
-_toggleCheckboxElem($todo, status) {
+_toggleCheckboxElem($todo, checked) {
 		// Toggle the checkbox element by changing the css classes (font-awesome)
 		const $checkbox = $todo.querySelector('i');
 		let cbValue;
 
-		const uncheckBox = ($cb) => {
+		function uncheckBox($cb) {
 			$cb.classList.remove('fas');
 			$cb.classList.remove('fa-check-circle');
 
@@ -84,7 +84,7 @@ _toggleCheckboxElem($todo, status) {
 			cbValue = false;
 		};
 
-		const checkBox = ($cb) => {
+		function checkBox($cb) {
 			$cb.classList.remove('far');
 			$cb.classList.remove('fa-circle');
 
@@ -94,7 +94,7 @@ _toggleCheckboxElem($todo, status) {
 			cbValue = true
 		};
 
-		if (status === undefined) {
+		if (checked === undefined) {
 			// Toggle
 			if ($checkbox.className.includes('fa-check-circle')) {
 				uncheckBox($checkbox);
@@ -103,12 +103,10 @@ _toggleCheckboxElem($todo, status) {
 			}
 		} else {
 			// Set
-			if (status === 'checked') {
+			if (checked) {
 				checkBox($checkbox);
-			} else if (status === 'unchecked') {
-				uncheckBox($checkbox);
 			} else {
-				throw new Error('Invalid status argument');
+				uncheckBox($checkbox);
 			}
 		}
 
@@ -145,8 +143,7 @@ _toggleCheckboxElem($todo, status) {
 	_loadTodoElem(key, model) {
 		const $todo = this._buildTodoElem(model.text);
 		$todo.setAttribute('data-index', key);
-		const status = model.isCompleted ? 'completed' : 'uncompleted';
-		this._toggleTodoStatus($todo, status);
+		this._toggleTodoStatus($todo, model.isCompleted);
 		return $todo;
 	}
 
@@ -161,8 +158,7 @@ _toggleCheckboxElem($todo, status) {
 		const key = this._store.addTodo(model);
 		$todo.setAttribute('data-index', key);
 
-		const status = isCompleted ? 'completed' : 'uncompleted';
-		this._toggleTodoStatus($todo, status);
+		this._toggleTodoStatus($todo, isCompleted);
 
 		return $todo;
 	}
@@ -235,30 +231,26 @@ _toggleCheckboxElem($todo, status) {
 		this._filterTodosBy($selectedFilter);
 	}
 
-	/** An indexed todo element has one of two statuses: completed or uncompleted.
-	 * Status is an optional argument to be used when explicitly 
-	 * specifying a desired status for the checkbox.
+	/** 
+	 * Sets the completed status of an indexed todo element
+	 * and saves the changes in the store.
 	 * 
-	 * Automatically updates the status of the indexed todo model in the store.
-	 * 
+	 * @param {boolean} [completed] - Optional parameter when the completed status
+	 * of the todo element is to be explicitly set by the caller 
+	 * to completed or uncompleted.
 	 * @returns True if the todo is completed, false if the todo is uncompleted
 	 */
-	_toggleTodoStatus($todo, status) {
-		let isCompleted;
-
-		// Set the completed status for the element
-		if (status === undefined) {
+	_toggleTodoStatus($todo, completed) {
+		if (completed === undefined) {
 			$todo.classList.toggle('completed');
-			isCompleted = this._toggleCheckboxElem($todo);
+			completed = this._toggleCheckboxElem($todo);
 		} else {
-			if (status === 'completed') {
+			if (completed) {
 				$todo.classList.add('completed');
-				isCompleted = this._toggleCheckboxElem($todo, 'checked');
-			} else if (status === 'uncompleted') {
-				$todo.classList.remove('completed');
-				isCompleted = this._toggleCheckboxElem($todo, 'unchecked');
+				this._toggleCheckboxElem($todo, true);
 			} else {
-				throw new Error('Invalid status argument');
+				$todo.classList.remove('completed');
+				this._toggleCheckboxElem($todo, false);
 			}
 		}
 
@@ -267,12 +259,11 @@ _toggleCheckboxElem($todo, status) {
 		if (key == undefined) {
 			throw new Error('data-index property not found on todo element');
 		}
-		
 		const todoModel = this._store.getTodo(key);
-		todoModel.isCompleted = isCompleted;
+		todoModel.isCompleted = completed;
 		this._store.setTodo(key, todoModel);
 
-		return isCompleted;
+		return completed;
 	}
 
 	/**
@@ -305,11 +296,11 @@ _toggleCheckboxElem($todo, status) {
 		// If all todos are completed
 		if (completed.length === visibleTodos.length) {
 			visibleTodos.forEach((elem) => {
-				this._toggleTodoStatus(elem, 'uncompleted');
+				this._toggleTodoStatus(elem, false);
 			});
 		} else { // If some or none todos are completed
 			visibleTodos.forEach((elem) => {
-				this._toggleTodoStatus(elem, 'completed');
+				this._toggleTodoStatus(elem, true);
 			});
 		}
 	}
