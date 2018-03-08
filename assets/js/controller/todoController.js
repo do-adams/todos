@@ -142,7 +142,7 @@ _toggleCheckboxElem($todo, checked) {
 	 */
 	_loadTodoElem(key, model) {
 		const $todo = this._buildTodoElem(model.text);
-		$todo.setAttribute('data-index', key);
+		$todo.setAttribute('data-key', key);
 		this._toggleTodoStatus($todo, model.isCompleted);
 		return $todo;
 	}
@@ -156,7 +156,7 @@ _toggleCheckboxElem($todo, checked) {
 
 		const model = new TodoModel(text, isCompleted);
 		const key = this._store.addTodo(model);
-		$todo.setAttribute('data-index', key);
+		$todo.setAttribute('data-key', key);
 
 		this._toggleTodoStatus($todo, isCompleted);
 
@@ -255,9 +255,9 @@ _toggleCheckboxElem($todo, checked) {
 		}
 
 		// Save the toggle changes to the store
-		const key = $todo.dataset.index;
+		const key = $todo.dataset.key;
 		if (key == undefined) {
-			throw new Error('data-index property not found on todo element');
+			throw new Error('data-key property not found on todo element');
 		}
 		const todoModel = this._store.getTodo(key);
 		todoModel.isCompleted = completed;
@@ -270,9 +270,9 @@ _toggleCheckboxElem($todo, checked) {
 	 * Removes an indexed todo element from the view and the store.
 	 */
 	_removeTodoElem($todo) {
-		const key = $todo.dataset.index;
+		const key = $todo.dataset.key;
 		if (key == undefined) {
-			throw new Error('data-index property not found on todo element');
+			throw new Error('data-key property not found on todo element');
 		}
 		this._view.$todoList.removeChild($todo);
 		this._store.removeTodo(key);
@@ -285,16 +285,18 @@ _toggleCheckboxElem($todo, checked) {
 	_checkAllHandler(e) {
 		// Toggle the completed status for all filtered (visible) todos
 		const todos = this._view.$todoList.children;
-		const completed = this._view.$todoList.querySelectorAll('.completed');
+		
 		const visibleTodos = [];
-
 		for(let i = 0; i < todos.length; i++) {
 			if (todos[i].className.includes('display-none')) continue;
 			visibleTodos.push(todos[i]);
 		}
 
+		const completedVisibleTodos = visibleTodos.filter(($t) => 
+		$t.className.includes('completed'));
+
 		// If all todos are completed
-		if (completed.length === visibleTodos.length) {
+		if (completedVisibleTodos.length === visibleTodos.length) {
 			visibleTodos.forEach((elem) => {
 				this._toggleTodoStatus(elem, false);
 			});
