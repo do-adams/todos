@@ -72,6 +72,10 @@ li:hover button {
 	visibility: visible;
 }
 
+button {
+	font-size: inherit;
+}
+
 button:hover {
 	cursor: pointer;
 }
