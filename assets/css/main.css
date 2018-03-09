@@ -57,6 +57,11 @@ li {
 li label {
 	margin-right: auto;
 	padding-left: 1rem;
+	flex-grow: 1;
+}
+
+li label:focus {
+	outline: none;
 }
 
 li button {
@@ -151,6 +156,12 @@ input:focus {
 /* Styling for completed todo text */
 .completed label {
 	text-decoration: line-through;
+}
+
+.edit-mode {
+	outline: none;
+	box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.3),
+				inset -1px -1px 1px rgba(0, 0, 0, 0.3);
 }
 
 .todo-footer {
