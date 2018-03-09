@@ -50,13 +50,13 @@ ul {
 li {
 	display: flex;
 	align-items: baseline;
-	padding:  0.5rem 0.5rem 0.5rem;
+	padding: 0rem 0.5rem;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 li label {
 	margin-right: auto;
-	padding-left: 1rem;
+	padding: 0.7rem 0 0.7rem 1rem;
 	flex-grow: 1;
 }
 
