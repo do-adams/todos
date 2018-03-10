@@ -2,7 +2,9 @@
 
 ![todos showcase](assets/img/todos-showcase.gif)
 
-todos is a todo list SPA (Single-Page Application) written in HTML, CSS, and vanilla JavaScript using the standard Web APIs and the Model-View-Controller architecture. This means **no outside dependencies or libraries** were used other than some webfonts from [Font Awesome](https://fontawesome.com/) for rendering some nice-looking icons.
+todos is a todo list SPA (Single-Page Application) written in HTML, CSS, and JavaScript using the standard Web APIs and the Model-View-Controller architecture. 
+
+**No outside dependencies or libraries** were used other than some webfonts from [Font Awesome](https://fontawesome.com/) for displaying some nice-looking native icons.
 
 You can view and use the web app [here](https://do-adams.github.io/todos/), courtesy of GitHub Pages.
 
