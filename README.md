@@ -29,4 +29,4 @@ I built todos for the explicit purpose of recreating the challenges that web dev
 
 I've come towards a higher appreciation of the way the web development community has attempted to solve the issues with bundling, routing, templating, and architecturing JavaScript in larger SPA projects as well as an interest in tools for better managing CSS like Sass and Less and the different client-side frameworks and libraries like Angular, React, and Vue.
 
-Overall, it has been impressive to see how much support has poured behind standardizing JavaScript and the Web APIs across browsers, to the point where I can build this app without any sort of dependencies and be confident that it will work well among a wide variety of browsers.
+Overall, it has been impressive to see how much support has poured behind standardizing JavaScript and the Web APIs across browsers, to the point where I can build this app without any sort of dependencies and be confident that it will work well among a wide variety of platforms.
