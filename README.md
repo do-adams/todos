@@ -1,6 +1,6 @@
 # todos
 
-todos is a SPA (Single-Page Application) written in HTML, CSS, and vanilla JavaScript using the standard Web APIs. This means **no outside dependencies or libraries** were used other than some webfonts from [Font Awesome](https://fontawesome.com/) for rendering some nice-looking icons.
+todos is a todo list SPA (Single-Page Application) written in HTML, CSS, and vanilla JavaScript using the standard Web APIs. This means **no outside dependencies or libraries** were used other than some webfonts from [Font Awesome](https://fontawesome.com/) for rendering some nice-looking icons.
 
 The project was inspired by the [TodoMVC](todomvc.com) initiative with the aim of being a completely interactive web application for keeping track of todos. This repository represents an original and independent implementation of the concept introduced by the TodoMVC group.
 
