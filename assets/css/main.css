@@ -58,6 +58,8 @@ li label {
 	margin-right: auto;
 	padding: 0.7rem 0 0.7rem 1rem;
 	flex-grow: 1;
+	overflow: hidden;
+	overflow-wrap: break-word;
 }
 
 li label:focus {
