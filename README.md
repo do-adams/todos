@@ -4,7 +4,7 @@ todos is a todo list SPA (Single-Page Application) written in HTML, CSS, and van
 
 The project was inspired by the [TodoMVC](todomvc.com) initiative with the aim of being a completely interactive web application for keeping track of todos. This repository represents an original and independent implementation of the concept introduced by the TodoMVC group.
 
-### Features
+## Features
 
 todos allows users to:
 * Create todos
@@ -23,7 +23,7 @@ todos makes use of the following notable web technologies:
 * Web Storage APIs
 * MVC Design Pattern
 
-### Lessons Learned
+## Lessons Learned
 
 I built todos for the explicit purpose of recreating the challenges that web developers face when developing SPAs for the browser. This has led to a better understanding of the reasoning behind many of the web frameworks that have sprung over the past couple of years to address these same challenges.
 
