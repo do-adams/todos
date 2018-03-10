@@ -43,25 +43,15 @@ class TodoController {
 	}
 
 	_setViewEvents() {
-		this._view.$checkAllIcon.addEventListener(
-			'click', this._updateViewAfterEvent(this._checkAllHandler));
+		// Basic events for creating and managing todos
 		this._view.$newTodo.addEventListener(
 			'keypress', this._updateViewAfterEvent(this._newTodoHandler));
 		this._view.$todoList.addEventListener(
 			'click', this._updateViewAfterEvent(this._todoEventHandler));
 		
+		// Edit mode events
 		this._view.$todoList.addEventListener(
-			'dblclick', (e) => {
-				const $target = e.target;
-				const tagName = $target.tagName;
-				const $todo = $target.parentNode;
-
-				if (tagName.toLowerCase() === 'label' && 
-				!this._isTodoElemInEditMode($todo)) {
-					this._toggleEditMode($todo, true);
-				}
-			});
-
+			'dblclick', this._enterEditModeHandler.bind(this));
 		this._view.$todoList.addEventListener(
 			'focusout', this._updateViewAfterEvent((e) => {
 				const $target = e.target;
@@ -69,15 +59,9 @@ class TodoController {
 				const $todo = $target.parentNode;
 
 				if (tagName.toLowerCase() === 'label') {
-					this._toggleEditMode($todo, false);
-					if ($target.innerText.trim() === '') {
-						this._removeTodoElem($todo);
-					} else {
-						this._saveTodoElemChanges($todo);
-					}
+					this._exitEditMode($todo);
 				}
 			}));
-
 		this._view.$todoList.addEventListener(
 			'keypress', this._updateViewAfterEvent((e) => {
 				const $target = e.target;
@@ -86,15 +70,13 @@ class TodoController {
 
 				if (tagName.toLowerCase() === 'label' && 
 				e.keyCode === this._ENTER_KEY) {
-					this._toggleEditMode($todo, false);
-					if ($target.innerText.trim() === '') {
-						this._removeTodoElem($todo);
-					} else {
-						this._saveTodoElemChanges($todo);
-					}
+					this._exitEditMode($todo);
 				}
 			}));
 
+		// Mass action and filtering
+		this._view.$checkAllIcon.addEventListener(
+			'click', this._updateViewAfterEvent(this._checkAllHandler));
 		this._view.todoFooter.$allFilter.addEventListener(
 			'click', this._todosDisplayFilterHandler.bind(this));
 		this._view.todoFooter.$activeFilter.addEventListener(
@@ -368,6 +350,17 @@ _toggleCheckboxElem($todo, checked) {
 		return edit;
 	}
 
+	_exitEditMode($todo) {
+		const $label = $todo.querySelector('label');
+
+		this._toggleEditMode($todo, false);
+		if ($label.innerText.trim() === '') {
+			this._removeTodoElem($todo);
+		} else {
+			this._saveTodoElemChanges($todo);
+		}
+	};
+
 	_saveTodoElemChanges($todo) {
 		const key = $todo.dataset.key;
 		const model = this._store.getTodo(key);
@@ -457,6 +450,17 @@ _toggleCheckboxElem($todo, checked) {
 		}
 		for(let $todo of index) {
 			this._removeTodoElem($todo)
+		}
+	}
+
+	_enterEditModeHandler(e) {
+		const $target = e.target;
+		const tagName = $target.tagName;
+		const $todo = $target.parentNode;
+
+		if (tagName.toLowerCase() === 'label' && 
+		!this._isTodoElemInEditMode($todo)) {
+			this._toggleEditMode($todo, true);
 		}
 	}
 }
