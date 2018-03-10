@@ -1,8 +1,10 @@
 # todos
 
+![todos showcase](assets/img/todos-showcase.gif)
+
 todos is a todo list SPA (Single-Page Application) written in HTML, CSS, and vanilla JavaScript using the standard Web APIs and the Model-View-Controller architecture. This means **no outside dependencies or libraries** were used other than some webfonts from [Font Awesome](https://fontawesome.com/) for rendering some nice-looking icons.
 
-The project was inspired by the [TodoMVC](todomvc.com) initiative with the aim of being a completely interactive web application for keeping track of todos. This repository represents an original and independent implementation of the concept introduced by the TodoMVC group.
+You can view and use the web app [here](https://do-adams.github.io/todos/), courtesy of GitHub Pages.
 
 ## Features
 
@@ -22,6 +24,10 @@ todos makes use of the following notable web technologies:
 * CSS Positioning
 * Web Storage APIs
 * MVC Design Pattern
+
+## About
+
+The project was inspired by the [TodoMVC](todomvc.com) initiative with the aim of being a completely interactive web application for keeping track of todos. This repository represents an original and independent implementation of the concept introduced by the TodoMVC group.
 
 ## Lessons Learned
 
