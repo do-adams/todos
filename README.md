@@ -29,7 +29,9 @@ todos makes use of the following notable web technologies:
 
 ## About
 
-The project was inspired by the [TodoMVC](todomvc.com) initiative with the aim of being a completely interactive web application for keeping track of todos. This repository represents an original and independent implementation of the concept introduced by the TodoMVC group.
+The project was inspired by the [TodoMVC](todomvc.com) initiative with the aim of being a completely interactive web application for keeping track of todos. 
+
+This repository represents an original and independent implementation of the concept introduced by the TodoMVC group.
 
 ## Lessons Learned
 
