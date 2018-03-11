@@ -1,59 +1,59 @@
 'use strict';
 
 class TodoToggleUtility {
-    constructor() {}
+	constructor() {}
 
-    /** 
+	/** 
      * Toggles the checkbox element in a todo element.
      * @param {boolean} [checked] - Optional parameter when the checked status 
      * is to be explicitly set by the caller to either checked or unchecked.
      * @returns True if the element is checked, false if unchecked.
      */
-    _toggleCheckboxElem($todo, checked) {
-        // Toggle the checkbox element by changing the css classes (font-awesome)
-        const $checkbox = $todo.querySelector('i');
-        let cbValue;
+	_toggleCheckboxElem($todo, checked) {
+		// Toggle the checkbox element by changing the css classes (font-awesome)
+		const $checkbox = $todo.querySelector('i');
+		let cbValue;
 
-        function uncheckBox($cb) {
-            $cb.classList.remove('fas');
-            $cb.classList.remove('fa-check-circle');
+		function uncheckBox($cb) {
+			$cb.classList.remove('fas');
+			$cb.classList.remove('fa-check-circle');
 
-            $cb.classList.add('far');
-            $cb.classList.add('fa-circle');
+			$cb.classList.add('far');
+			$cb.classList.add('fa-circle');
 
-            cbValue = false;
-        };
+			cbValue = false;
+		}
 
-        function checkBox($cb) {
-            $cb.classList.remove('far');
-            $cb.classList.remove('fa-circle');
+		function checkBox($cb) {
+			$cb.classList.remove('far');
+			$cb.classList.remove('fa-circle');
 
-            $cb.classList.add('fas');
-            $cb.classList.add('fa-check-circle');
+			$cb.classList.add('fas');
+			$cb.classList.add('fa-check-circle');
 
-            cbValue = true
-        };
+			cbValue = true;
+		}
 
-        if (checked === undefined) {
-            // Toggle
-            if ($checkbox.className.includes('fa-check-circle')) {
-                uncheckBox($checkbox);
-            } else if ($checkbox.className.includes('fa-circle')) {
-                checkBox($checkbox);
-            }
-        } else {
-            // Set
-            if (checked) {
-                checkBox($checkbox);
-            } else {
-                uncheckBox($checkbox);
-            }
-        }
+		if (checked === undefined) {
+			// Toggle
+			if ($checkbox.className.includes('fa-check-circle')) {
+				uncheckBox($checkbox);
+			} else if ($checkbox.className.includes('fa-circle')) {
+				checkBox($checkbox);
+			}
+		} else {
+			// Set
+			if (checked) {
+				checkBox($checkbox);
+			} else {
+				uncheckBox($checkbox);
+			}
+		}
 
-        return cbValue;
-    }
+		return cbValue;
+	}
 
-    /** 
+	/** 
 	 * Sets the completed status of an indexed todo element
 	 * and saves the changes in the store.
 	 * 
@@ -76,7 +76,7 @@ class TodoToggleUtility {
 			}
 		}
 		return completed;
-    }
+	}
 
 	toggleEditMode($todo, edit) {
 		if (edit === undefined) {
@@ -123,6 +123,6 @@ class TodoToggleUtility {
 		}
 
 		return edit;
-    }
+	}
     
 }

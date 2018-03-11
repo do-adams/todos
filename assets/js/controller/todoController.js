@@ -241,7 +241,7 @@ class TodoController {
 		} else {
 			this._saveTodoElemChanges($todo);
 		}
-	};
+	}
 
 	_saveTodoElemChanges($todo) {
 		const key = $todo.dataset.key;
@@ -280,7 +280,7 @@ class TodoController {
 		}
 
 		const completedVisibleTodos = visibleTodos.filter(($t) => 
-		$t.className.includes('completed'));
+			$t.className.includes('completed'));
 
 		// If all todos are completed
 		if (completedVisibleTodos.length === visibleTodos.length) {
@@ -331,7 +331,7 @@ class TodoController {
 			}
 		}
 		for(let $todo of index) {
-			this._removeTodoElem($todo)
+			this._removeTodoElem($todo);
 		}
 	}
 
