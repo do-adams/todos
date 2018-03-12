@@ -19,9 +19,10 @@ todos allows users to:
 * Filter todos
 * Persist todos across browser sessions
 
-todos makes use of the following notable web technologies:
+todos makes use of the following notable web techniques:
 * Responsive Web Design (supports phones, tablets, and desktops)
 * ES6 Language Features
+* Event Propagation
 * CSS Flexbox
 * CSS Positioning
 * Web Storage APIs
@@ -37,6 +38,6 @@ This repository represents an original and independent implementation of the con
 
 I built todos for the explicit purpose of recreating the challenges that web developers face when developing SPAs for the browser. This has led to a better understanding of the reasoning behind many of the web frameworks that have sprung over the past couple of years to address these same challenges.
 
-I've come towards a higher appreciation of the way the web development community has attempted to solve the issues with bundling, routing, templating, and architecturing JavaScript in larger SPA projects as well as an interest in tools for better managing CSS like Sass and Less and the different client-side frameworks and libraries like Angular, React, and Vue.
+I've come towards a higher appreciation of the way the web development community has attempted to solve the issues with bundling, minification, routing, templating, and architecturing JavaScript in larger SPA projects as well as an interest in tools for better managing CSS like Sass and Less and the different client-side frameworks and libraries like Angular, React, and Vue.
 
 Overall, it has been impressive to see how much support has poured behind standardizing JavaScript and the Web APIs across browsers, to the point where I can build this app without any sort of dependencies and be confident that it will work well among a wide variety of platforms.
