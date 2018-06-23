@@ -24,7 +24,7 @@ main {
 }
 
 body > footer {
-	margin-bottom: 2rem;
+	padding-bottom: 2rem;
 	color: #70566D;
 	opacity: 0.8;
 	text-align: center;
